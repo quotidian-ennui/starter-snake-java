@@ -1,0 +1,92 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+import org.apache.tools.ant.filters.*
+
+plugins {
+  id 'java'
+  id 'maven'
+  id 'distribution'
+  id "com.palantir.docker" version "0.19.2"
+}
+
+ext {
+  projectVersion = '0.0.1-SNAPSHOT'
+  slf4jVersion = '1.7.26'
+  jacksonVersion = "2.9.8"
+  log4j2Version = "2.11.2"
+  componentName = 'Battlesnake'
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+  allprojects {
+    tasks.withType(Javadoc) {
+      options.addStringOption('Xdoclint:none', '-quiet')
+    }
+  }
+}
+
+sourceCompatibility = 1.8
+group   = 'io.battlesnake'
+version = projectVersion
+
+repositories {
+  mavenCentral()
+}
+
+
+configurations {
+  javadoc {}
+  snakeRuntime {}
+}
+
+configurations.all {
+  resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+}
+
+dependencies {
+  compile ("com.sparkjava:spark-core:2.9.0")
+  compile ("org.slf4j:slf4j-api:$slf4jVersion")
+  compile ("org.slf4j:slf4j-simple:$slf4jVersion")
+  compile ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
+  compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+  compile ("org.apache.commons:commons-collections4:4.3")
+  compile ("org.apache.commons:commons-lang3:3.8.1")
+  compile ("net.jodah:expiringmap:0.5.9")
+
+  testCompile ('org.junit.jupiter:junit-jupiter-api:5.2.0')
+}
+
+
+jar {
+  manifest {
+    attributes("Built-By": System.getProperty('user.name'),
+               "Build-Jdk": System.getProperty('java.version'))
+  }
+}
+
+javadoc {
+  configure(options) {
+    title= componentName
+  }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+  archives javadocJar
+  archives sourcesJar
+}
+
+task snake(type: JavaExec, dependsOn: classes) {
+  group 'Build'
+  description 'Run battlesnake'
+  main = 'io.battlesnake.starter.Snake'
+  classpath = sourceSets.main.runtimeClasspath
+}
