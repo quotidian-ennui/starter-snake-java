@@ -33,6 +33,9 @@ repositories {
   mavenCentral()
 }
 
+distTar.enabled=false
+distZip.enabled=false
+dockerfileZip.enabled=false
 
 configurations {
   javadoc {}
