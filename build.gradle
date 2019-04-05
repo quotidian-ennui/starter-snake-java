@@ -5,6 +5,7 @@ plugins {
   id 'java'
   id 'maven'
   id 'distribution'
+  id 'jacoco'
   id "com.palantir.docker" version "0.19.2"
 }
 
@@ -13,7 +14,7 @@ ext {
   slf4jVersion = '1.7.26'
   jacksonVersion = "2.9.8"
   log4j2Version = "2.11.2"
-  componentName = 'Battlesnake'
+  componentName = 'Battlesnake Starter'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
@@ -79,6 +80,19 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+
+jacoco {
+  toolVersion="0.8.1"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+
 artifacts {
   archives javadocJar
   archives sourcesJar
@@ -90,3 +104,5 @@ task snake(type: JavaExec, dependsOn: classes) {
   main = 'io.battlesnake.starter.Snake'
   classpath = sourceSets.main.runtimeClasspath
 }
+
+check.dependsOn jacocoTestReport
