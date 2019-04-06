@@ -18,8 +18,9 @@ public class CurrentGame {
       ExpiringMap.builder().maxSize(1024)
           .expirationPolicy(ExpirationPolicy.ACCESSED).expiration(1, TimeUnit.HOURS).build();
   
-  public static synchronized CurrentGame getInstance(String gameId, Arena arena) {
-    CurrentGame state = new CurrentGame().addArena(arena);
+  public static synchronized CurrentGame getInstance(Arena arena) {
+    String gameId = id(arena);
+    CurrentGame state = new CurrentGame(gameId).addArena(arena);
     if (ALL_GAMES.containsKey(gameId)) {
       state = ALL_GAMES.get(gameId).addArena(arena);
     } else {
@@ -28,15 +29,20 @@ public class CurrentGame {
     return state;
   }
   
-  public static synchronized void finish(String gameId) {
-    ALL_GAMES.remove(gameId);
+  private static String id(Arena arena) {
+    return String.format("%s-%s", arena.game.id, arena.you.id);
+  }
+
+  public static synchronized void finish(Arena arena) {
+    ALL_GAMES.remove(id(arena));
   }
 
   private ListOrderedSet<Arena> moveHistory =
       ListOrderedSet.listOrderedSet(new HashSet<Arena>());
+  private String id;
 
-  private CurrentGame() {
-
+  private CurrentGame(String id) {
+    this.id = id;
   }
 
   public CurrentGame addArena(Arena arena) {
@@ -48,6 +54,10 @@ public class CurrentGame {
 
   public List<Arena> history() {
     return new ArrayList<>(moveHistory);
+  }
+
+  public String id() {
+    return id;
   }
 
   public static String randomize(String[] strings) {

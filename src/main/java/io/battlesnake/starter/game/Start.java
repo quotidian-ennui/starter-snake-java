@@ -28,8 +28,8 @@ public class Start implements Action {
 
   @Override
   public Map<String, String> handle(Arena arena) {
-    CurrentGame state = CurrentGame.getInstance(arena.game.id, arena);
-    log.info("Created new game [{}]", arena.game.id);
+    CurrentGame state = CurrentGame.getInstance(arena);
+    log.info("Created new game [{}]", state.id());
     Map<String,String> map = new HashMap<>();
     map.put(HEAD_TYPE, CurrentGame.randomize(SNAKE_HEADS));
     map.put(TAIL_TYPE, CurrentGame.randomize(SNAKE_TAILS));

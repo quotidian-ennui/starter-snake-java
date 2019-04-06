@@ -15,6 +15,7 @@ ext {
   jacksonVersion = "2.9.8"
   log4j2Version = "2.11.2"
   componentName = 'Battlesnake Starter'
+  mainClass = 'io.battlesnake.starter.Snake'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
@@ -63,7 +64,8 @@ dependencies {
 jar {
   manifest {
     attributes("Built-By": System.getProperty('user.name'),
-               "Build-Jdk": System.getProperty('java.version'))
+               "Build-Jdk": System.getProperty('java.version'),
+               "Main-Class": mainClass)
   }
 }
 
@@ -102,9 +104,9 @@ artifacts {
 }
 
 task snake(type: JavaExec, dependsOn: classes) {
-  group 'Build'
-  description 'Run battlesnake'
-  main = 'io.battlesnake.starter.Snake'
+  group 'Execution'
+  description 'Run battlesnake (yay!)'
+  main = mainClass
   classpath = sourceSets.main.runtimeClasspath
 }
 

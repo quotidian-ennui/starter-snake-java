@@ -19,8 +19,8 @@ public class Move implements Action {
 
   @Override
   public Map<String, String> handle(Arena arena) {
-    CurrentGame state = CurrentGame.getInstance(arena.game.id, arena);
-    log.info("Retrieved game [{}]", arena.game.id);
+    CurrentGame state = CurrentGame.getInstance(arena);
+    log.info("Retrieved game [{}]", state.id());
     return buildMove(CurrentGame.randomize(DIRECTIONS));
   }
 

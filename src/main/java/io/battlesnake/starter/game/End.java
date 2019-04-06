@@ -12,7 +12,7 @@ public class End implements Action {
   @Override
   public Map<String, String> handle(Arena arena) {
     log.debug("Finishing game [{}]", arena.game.id);
-    CurrentGame.finish(arena.game.id);
+    CurrentGame.finish(arena);
     return Collections.EMPTY_MAP;
   }
 }
