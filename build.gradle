@@ -53,7 +53,7 @@ dependencies {
   compile ("org.slf4j:slf4j-simple:$slf4jVersion")
   compile ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
   compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-  compile ("org.apache.commons:commons-collections4:4.3")
+  compile ("org.apache.commons:commons-collections4:4.4")
   compile ("org.apache.commons:commons-lang3:3.8.1")
   compile ("net.jodah:expiringmap:0.5.9")
 
