@@ -48,7 +48,7 @@ configurations.all {
 }
 
 dependencies {
-  compile ("com.sparkjava:spark-core:2.9.0")
+  compile ("com.sparkjava:spark-core:2.9.3")
   compile ("org.slf4j:slf4j-api:$slf4jVersion")
   compile ("org.slf4j:slf4j-simple:$slf4jVersion")
   compile ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
