@@ -57,7 +57,7 @@ dependencies {
   compile ("org.apache.commons:commons-lang3:3.8.1")
   compile ("net.jodah:expiringmap:0.5.9")
 
-  testCompile ('org.junit.jupiter:junit-jupiter-api:5.2.0')
+  testCompile ('org.junit.jupiter:junit-jupiter-api:5.7.1')
 }
 
 
