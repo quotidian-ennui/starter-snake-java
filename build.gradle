@@ -12,7 +12,7 @@ plugins {
 ext {
   projectVersion = '0.0.1-SNAPSHOT'
   slf4jVersion = '1.7.26'
-  jacksonVersion = "2.9.8"
+  jacksonVersion = "2.12.2"
   log4j2Version = "2.11.2"
   componentName = 'Battlesnake Starter'
   mainClass = 'io.battlesnake.starter.Snake'
